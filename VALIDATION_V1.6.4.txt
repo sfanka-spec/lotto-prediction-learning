@@ -1,0 +1,40 @@
+Lottery AI V1.6.4 validation
+Date: 2026-09-19
+Scope: Learning Center semantic hardening + regression/error check.
+
+Automated test suite: 148 passed.
+Python compile check: PASS.
+
+Verified current-draw example (2026-09-18):
+- Best hit = 2/7
+- Portfolio winner coverage = 7/7
+- Unique numbers = 52/52
+- Full-pool coverage flag = True
+- Combination gap = 5
+- WCE = 28.5714%
+- Best-hit original rank = #3/20 => WELL_RANKED / placement GOOD
+- Score-vs-Hit Spearman = +0.012295 => global association NEUTRAL
+- Conservative combined ranking stage = MIXED (not GOOD)
+
+Verified UI/semantic changes:
+- `Paired evaluated draws` -> `Production-Challenger paired draws`.
+- Full-pool portfolios display `FULL-POOL COVERAGE — NOT NUMBER-SELECTION EVIDENCE`.
+- Learning Center splits Best-hit placement from Global rank association.
+- Current Draw and Learning Center share the same Spearman label function/thresholds.
+- Old stage_diagnosis[`ranking`] key remains available but is conservative.
+
+Regression guard:
+The following production/research model modules are byte-for-byte unchanged from V1.6.3:
+- lottery_ai/engine.py
+- lottery_ai/coverage.py
+- lottery_ai/portfolio.py
+- lottery_ai/learning.py
+- lottery_ai/evaluation.py
+- lottery_ai/bayesian_strategy.py
+- lottery_ai/research_engine.py
+- lottery_ai/integrity.py
+- lottery_ai/analysis.py
+
+No database migration required.
+Frozen prediction immutability unchanged.
+Production/Challenger weights unchanged by this upgrade.

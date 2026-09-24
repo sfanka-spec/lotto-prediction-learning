@@ -1,0 +1,33 @@
+Lottery AI V1.5.5 — Validation Record
+
+App version: V1.5.5
+Champion diagnostic schema: CHAMP1.6
+Coverage engine: COV1.3
+Portfolio policy: BUD1.4
+
+Automated validation
+--------------------
+pytest -q
+127 passed
+
+python -m compileall -q app.py lottery_ai tests
+PASS
+
+import app
+PASS
+
+Targeted V1.5.5 regression coverage
+-----------------------------------
+PASS — 20 LOTTO MAX tickets / 140 slots / 52 unique numbers is measured as full portfolio breadth
+PASS — user-example portfolio winner coverage is 7/7, not 5/7
+PASS — CWC@3/@5/@10/@20 = 2/3/4/7 for the supplied 2026-09-15 example
+PASS — BestHit@3/@5/@10/@20 = 1/2/2/2 for the supplied example
+PASS — WCE = 2/7 = 28.5714% when portfolio coverage is 7 and best ticket hit is 2
+PASS — Candidate-number @K diagnostic remains independent from full ticket-union coverage
+PASS — candidate-number support profile is deterministic and spans the complete legal number pool
+PASS — current-draw snapshot reads only the frozen pre-draw candidate-number profile
+PASS — all prior V1.0–V1.5.4 regression tests remain green
+
+Scientific boundary
+-------------------
+The release improves diagnostic separation and UI clarity. It does not establish that historical lottery-number features produce a reliable future winning edge. Candidate-number support ranking is diagnostic-only and is not a jackpot probability.

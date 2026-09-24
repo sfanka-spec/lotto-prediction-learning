@@ -1,0 +1,127 @@
+Lottery AI V1.5.0 — Validation Record
+=============================================
+
+Release: Adaptive Budget, Portfolio & Jackpot Learning
+Base: V1.4.1 Validation Hardening
+Validation date: 2026-09-13 America/Vancouver
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 87 passed
+
+2. Python compilation
+---------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+3. Application import / version
+-------------------------------
+import app
+APP_VERSION: V1.5.0
+RESULT: PASS
+
+4. Frozen Top-20 subset search
+------------------------------
+- Portfolio AI selects only from frozen Production Top-20.
+- No number regeneration/recombination occurs in the Budget layer.
+- 20 frozen lines -> 2^20 - 1 = 1,048,575 non-empty candidate subsets.
+- Best subset is frozen for each line count 1..20 before the draw.
+- Custom dollar budgets later map to this pre-frozen line-count frontier.
+RESULT: PASS
+
+5. Draw-level learning independence
+-----------------------------------
+- One draw contributes at most one learning observation per line-count bucket.
+- Millions of subsets are NOT treated as millions of independent samples.
+- Post-draw oracle is regret-label only.
+- Shadow Portfolio policy has 0% Production number-model impact.
+RESULT: PASS
+
+6. Budget evidence / ROI semantics
+----------------------------------
+- Budget learner tracks mean/median ROI floor, any-prize rate, Best Match,
+  winner coverage, same-budget Random hit/payout edges, bootstrap CI and
+  paired sign-flip p-values.
+- Selection Evidence Grade D/C/B/A is based on forward-draw evidence.
+- Grade measures selector evidence, NOT guaranteed positive profit.
+- ROI is explicitly a conservative fixed-tier floor when pari-mutuel/jackpot
+  prize amounts are unavailable.
+RESULT: PASS
+
+7. Prize-tier sanity checks
+---------------------------
+LOTTO 6/49 fixed values represented conservatively:
+- 3/6 -> $10
+- 2/6 + Bonus -> $5
+- 2/6 -> Free Play valued at current $3 play cost
+Higher variable tiers are unresolved rather than guessed.
+
+LOTTO MAX fixed values represented conservatively:
+- 4/7 -> $20
+- 3/7 + Bonus -> $20
+- 3/7 -> Free Play valued at current $6 play cost
+- 4/7 + Bonus is correctly marked unresolved/pari-mutuel, not fixed $20.
+RESULT: PASS
+
+8. Game packaging accounting
+----------------------------
+LOTTO 6/49:
+- one model-directed Classic selection / $3 play
+- system-assigned Gold Ball selection is separate from Classic model skill
+
+LOTTO MAX:
+- one model-directed selection / $6 purchase
+- three terminal Quick Picks accompany the purchase
+- model-directed Top-N cost counts $6 per directed model line
+- random companion Quick Picks are not credited to the model
+RESULT: PASS
+
+9. Jackpot provider / stale state
+---------------------------------
+- WCLC widget parser keeps LOTTO 6/49 Gold Ball and LOTTO MAX jackpot fields separate.
+- Failed refresh preserves last verified snapshot but marks runtime state STALE.
+- Jackpot refresh failure does not block draw/history updating.
+- Parser behavior is unit-tested against the current WCLC widget text format.
+- This validation did not depend on a live network call from the test container.
+RESULT: PASS
+
+10. Jackpot economics boundaries
+--------------------------------
+- LOTTO MAX crowd pressure is labeled jackpot-state proxy, not actual sales.
+- LOTTO 6/49 Gold Ball conditional gold probability uses balls remaining.
+- Per-play Gold Ball probability is not produced without verified issued-selection count.
+- Jackpot/economics state never rewrites frozen Top-20 numbers.
+RESULT: PASS
+
+11. 12,000-candidate smoke / performance observation
+----------------------------------------------------
+Fixture: bundled seed history, deterministic seeds, 12,000 candidates,
+Top-20 Balanced + Score-only + Focused + Pure Coverage, then exact V1.5 frontier.
+
+LOTTO 6/49
+- strategy suite: ~3.42 s
+- exact 20-line frontier: ~2.45 s
+- frontier subsets: 1,048,575
+- structural Auto in fixture: 14 model lines / $42
+
+LOTTO MAX
+- strategy suite: ~3.80 s
+- exact 20-line frontier: ~2.57 s
+- frontier subsets: 1,048,575
+- structural Auto in fixture: 14 model-directed selections / $84
+
+Timing is environment-dependent and is not a guarantee for another PC.
+Fixture Auto counts are structural smoke-test outputs only; they are not spending advice.
+
+12. Known limitations / deliberate non-claims
+----------------------------------------------
+- A fair lottery draw remains random; high model score is not higher official draw probability.
+- Current Crowd Pressure is not measured sales volume.
+- Exact monetary ROI for variable prize tiers requires official prize-breakdown ingestion;
+  until then the software reports a lower-bound ROI rather than fabricating a payout.
+- Budget learning needs real future pre-draw freezes; historical post-draw reconstruction is
+  not promoted into forward evidence.
+- No Martingale/loss chasing is implemented.
+
+FINAL RESULT: PASS

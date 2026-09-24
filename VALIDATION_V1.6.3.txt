@@ -1,0 +1,15 @@
+Lottery AI V1.6.3 validation
+Date: 2026-09-18
+Scope: Current Draw spacious UI hardening only.
+
+Automated test suite: 146 passed.
+
+Verified changes:
+- Current Draw text area: height 16 rows (was 12)
+- Width: 94 monospace columns (was 76)
+- Wrap length: 790 px (was 610 px)
+- Logical display allowance: up to 18 lines (was 14)
+- Production model logic unchanged
+- Ranking weights unchanged
+- Freeze contents/learning logic unchanged
+- No database migration required

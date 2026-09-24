@@ -1,0 +1,44 @@
+Lottery AI V1.6.1 — Evaluation Integrity Hardening
+Validation record
+
+Base
+- Direct upgrade of V1.6.0 Bayesian Sample-Efficient Strategy Lab.
+- Original V1.6.0 baseline in this environment: 138 tests passed.
+
+Final automated regression
+- 146 tests passed.
+- Python compileall passed for app.py, lottery_ai, and tests.
+- New regression coverage includes:
+  * small-sample paired-t correction;
+  * cross-source historical/forward deduplication;
+  * portfolio-specific self-null structure conditioning;
+  * unique judgment + immutable frozen payload + freeze-ledger verification;
+  * NumPy exact-frontier equality against the Python exact reference;
+  * explicit/local data-path precedence;
+  * exclusion of old unequal-budget Production/Challenger evidence.
+
+Small-sample null calibration check
+- 30,000 independent Normal-null trials per sample size, two-sided nominal 5%:
+  * n=8  -> observed false-positive rate 0.0486; t critical 2.365
+  * n=12 -> observed false-positive rate 0.0501; t critical 2.201
+  * n=20 -> observed false-positive rate 0.0480; t critical 2.093
+- This validates the V1.6.1 sample-SD + t-critical correction under the standard Normal-null setting.
+
+Exact frontier performance check (20 candidate rows, all k=1..20)
+- NumPy exact subset engine: 0.223531 s
+- Python exact reference:      2.324544 s
+- Observed speedup here:       10.40x
+- Optimal subset masks identical for all 20 k values: YES
+- Timing is machine/environment dependent; equality is the important correctness check.
+
+Branding / configuration audit
+- Case-insensitive current project text search for previous personal-name branding: 0 matches.
+- File/path-name search for previous personal-name branding: 0 matches.
+- Current source keeps Lotto Max regime boundary dates in the centralized config registry; production modules no longer duplicate those boundary literals.
+
+Important scope notes
+- Production + Challenger freeze insertion is atomic in one transaction. Same-run strategy and budget artifacts carry the same prediction_run_id, but they are separate persisted artifacts rather than one cross-table database transaction.
+- Missing legacy strategy shadows are deliberately not regenerated from a different candidate universe.
+- The freeze hash ledger is local tamper-evidence. Protection against an adversary who can rewrite both the database and its local hashes requires an external trusted anchor.
+- Self-null avg-hit and union-coverage expectations are analytic. Structure-dependent best-hit/WCE expectations use deterministic Monte Carlo (8,192 samples by default), not exhaustive mathematical enumeration.
+- Fair lottery probabilities are not increased by this software; the release focuses on reducing biased evaluation and false evidence.

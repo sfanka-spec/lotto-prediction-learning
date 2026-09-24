@@ -1,0 +1,39 @@
+Lottery AI V1.6.5 validation
+Date: 2026-09-19
+Base: Lottery_AI_V1.6.4_Learning_Center_Semantic_Hardening_Clean.zip
+Scope: statistical correctness, performance, runtime hardening, regression coverage.
+
+Automated validation:
+- Python compileall: PASS
+- pytest: 162 passed
+- Existing V1.6.4 baseline before modification: 148 passed
+
+Statistical correctness checks:
+- pair_lift uses finite-population correction for k-of-M sampling without replacement.
+- Seeded fair-random 6/49 history (1,500 draws): mean shrunk pair_lift = 1.0104333405 (near null centre 1.0).
+- paired_t_critical_95 is continuous across df=120 -> 121; no direct jump to 1.96.
+- Small-pool Monte Carlo fallback creates fresh seeded reference slices rather than repeating the same first block.
+
+Performance check (sandbox, synthetic 6/49 history):
+- History size: 3,000 draws
+- Candidate count: 12,000
+- FeatureEngine initialization: ~0.048 s
+- Candidate scoring: ~0.466 s
+- Timing is environment-specific; this is a regression/performance sanity check, not a guaranteed user-machine runtime.
+
+Reliability checks covered by tests:
+- fastmath list/generator parity for float workloads.
+- historical structure invariant precomputation.
+- candidate-count legal-universe cap and termination guard.
+- GB18030 CSV decode + invalid-row skipped counter.
+- HTTP 429 retry with Retry-After.
+- signed pickle snapshot rollback when sidecar replacement fails.
+- Pacific timezone failure is explicit instead of silently using local machine time.
+- worker exception resets transient card status before displaying the error.
+- update pipeline marks header FAILED before propagating an update exception.
+
+Compatibility:
+- No database migration required.
+- Existing frozen predictions are not rewritten.
+- New Production/Challenger rankings may change because pair_lift was intentionally corrected.
+- Monte Carlo remains diagnostic-only at 0% ranking weight.

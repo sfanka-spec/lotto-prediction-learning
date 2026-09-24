@@ -1,0 +1,72 @@
+Lottery AI V1.5.2 — Validation Record
+=============================================
+
+Release: Per-Line Learning & Deployment Hardening
+App version: V1.5.2
+Portfolio policy: BUD1.2
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 107 passed
+
+2. Python compilation
+---------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+3. App import/version smoke
+---------------------------
+RESULT: PASS
+APP_VERSION: V1.5.2
+PORTFOLIO_POLICY_VERSION: BUD1.2
+
+4. SQLite initialization / compatibility smoke
+----------------------------------------------
+Fresh temporary database initialization: PASS
+No destructive migration added.
+Older frozen predictions are not rewritten.
+
+5. Per-line learning checks
+---------------------------
+PASS:
+- every frozen frontier choice contains PRE-DRAW role metadata;
+- selected lines are judged separately after the draw;
+- line review stores matched numbers, unique winner contribution, Bonus state and payout state;
+- one-at-a-time replacement analysis stays post-draw / counterfactual only;
+- same-draw BUD versions are deduplicated before line-learning aggregation;
+- effective n is draw count, not selected-line count.
+
+6. Budget/deployment checks
+---------------------------
+PASS:
+- maximum budget and recommended efficiency spend are distinct;
+- spend-to-cap plan is available separately;
+- $100 added to standard budget frontier;
+- Lotto Max package display distinguishes model-directed purchases and companion Quick Picks.
+
+7. Review-driven bug fixes
+--------------------------
+FIXED:
+- Learning UI requested a non-existent `production_vs_random_avg_hit_edge` key. It now uses the validator's actual `production_vs_random_best_hit_edge` key.
+- Single-line portfolios could be mislabeled COVERAGE because all of their own numbers are marginal; single-line role logic is now CORE/BALANCED only.
+- Budget wording could make unused budget appear to be an arithmetic error; UI now shows maximum budget, efficiency sweet spot, max-deployment spend, and unused budget separately.
+
+8. 20-line exact-search smoke
+-----------------------------
+Search space: 1,048,575 non-empty subsets.
+Validation-container observations (machine dependent):
+- LOTTO 6/49 frontier: ~3.56 s
+- LOTTO 6/49 full judgment with line review: ~0.64 s
+- LOTTO MAX frontier: ~3.64 s
+- LOTTO MAX full judgment with line review: ~0.63 s
+
+9. Static sanity
+----------------
+AST-based import-use scan over app.py + lottery_ai/*.py:
+RESULT: no unused imports detected by this lightweight scan.
+Note: this is not a substitute for pyflakes/ruff; those packages were not installed in the validation environment.
+
+10. Statistical boundary
+------------------------
+Per-line diagnostics do not create extra statistical sample size. Multiple selected lines from one draw are aggregated within-draw before cross-draw learning. Production impact remains 0% until the existing forward evidence gates are met.

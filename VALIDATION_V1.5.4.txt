@@ -1,0 +1,40 @@
+Lottery AI V1.5.4 — Validation Record
+
+App version: V1.5.4
+Portfolio policy: BUD1.4
+Portfolio shadow: BUDS1.4
+Frontier schema: PORTFOLIO_FRONTIER1.3
+Budget decision schema: BUDGET_PORTFOLIO1.3
+Judgment schema: PORTFOLIO_JUDGMENT1.2
+
+Automated validation
+--------------------
+pytest -q
+122 passed
+
+python -m compileall -q app.py lottery_ai tests
+PASS
+
+import app
+PASS
+
+Targeted regression coverage
+----------------------------
+PASS — endpoint-normalized knee is invariant to a constant utility baseline
+PASS — exact-k frontier exposes corrected marginal semantics
+PASS — exact post-draw oracle jointly optimizes subset coverage
+PASS — unresolved high-tier outcome is not demoted below a small fixed-cash tier
+PASS — budget evidence uses one common paired draw cohort
+PASS — evidence n cannot be inflated by a larger sample belonging to another k
+PASS — Production and Shadow judgments reuse the same exact non-monetary oracle
+PASS — existing V1.0–V1.5.3 regression suite remains green
+
+Performance smoke test (validation container; machine-dependent)
+---------------------------------------------------------------
+6/49 20-line exact structural frontier: ~2.9 s
+LOTTO MAX 20-line exact structural frontier: ~3.2 s
+Exact Top-20 post-draw oracle: ~1.4 s per draw
+
+Scientific boundary
+-------------------
+The release improves internal correctness, comparison hygiene, and UI semantics. It does not establish that historical lottery-number features create a positive expected-value betting edge. Production auto-spend remains evidence-gated.

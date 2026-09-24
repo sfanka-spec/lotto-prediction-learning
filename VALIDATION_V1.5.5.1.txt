@@ -1,0 +1,26 @@
+Lottery AI V1.5.5.1 validation
+====================================
+
+Scope
+-----
+- Restore visible LOTTO MAX next-draw information.
+- Add the next official jackpot to the upper-right card.
+- Preserve the detailed hidden Jackpot menu and all prediction logic.
+
+Automated verification
+----------------------
+- Full test suite: 131 passed
+- Python compilation: passed for app.py, lottery_ai/*.py, and tests/*.py
+- Added regression tests for:
+  * LOTTO MAX next draw date, weekday, lifecycle status, and jackpot
+  * non-blank fallback when draw/jackpot data is unavailable
+  * equivalent visible LOTTO 6/49 prize summary
+
+Implementation safety
+---------------------
+- Replaced the theme-sensitive disabled Text display with a high-contrast,
+  read-only StringVar-backed label.
+- The displayed amount comes from the existing official/cached jackpot snapshot.
+- Stale cached values are visibly marked as awaiting refresh.
+- No database migration is required.
+- No prediction, ranking, learning, freeze, scoring, or menu logic was changed.

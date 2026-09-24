@@ -1,0 +1,115 @@
+Lottery AI V1.5.1 — Concentration & ROI Hardening
+========================================================
+Validation date: 2026-09-13 America/Vancouver
+Base: V1.5.0 Adaptive Budget, Portfolio & Jackpot Learning
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 101 passed
+
+2. Python compilation / import
+------------------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+import app; APP_VERSION
+RESULT: PASS / V1.5.1
+
+3. Concentration diagnostics
+----------------------------
+- Winner Concentration Efficiency = Best Single Match / Portfolio Winner Coverage
+- Winner Dispersion Loss retained separately
+- Champion summary accumulates WCE
+- New concentrated research strategy frozen from the same candidate pool
+RESULT: PASS
+
+4. Budget structural-bias correction
+------------------------------------
+V1.5.0 cumulative quality/rank-mass terms increased mechanically with line count.
+V1.5.1 uses average selected quality/rank retention + model-core concentration +
+a modest extra-line deployment penalty.
+Dedicated regression verifies the frontier is no longer monotonic because of the old
+cumulative-mass construction.
+RESULT: PASS
+
+5. Same-budget comparison integrity
+-----------------------------------
+- Production and Shadow paired inside the same draw
+- Shadow evaluated at the Production Auto k
+- Duplicate version records for one draw de-duplicated
+- incomplete shadow records do not inflate n
+RESULT: PASS
+
+6. Budget statistical hardening
+-------------------------------
+- Random control includes Best Match, Coverage and WCE
+- small subset spaces use exact enumeration
+- larger subset spaces use deterministic Monte Carlo
+- line-count p-values receive BH-FDR correction
+RESULT: PASS
+
+7. ROI correctness
+------------------
+Main-number payout and true retail-package payout are now separate concepts.
+
+LOTTO MAX:
+- one model-directed line requires one $6 retail purchase
+- the same purchase also contains three terminal Quick Picks
+- companion Quick Pick prizes are not silently assigned $0 and are not credited to the model
+
+LOTTO 6/49:
+- the $3 Classic line also has a system-assigned Gold Ball selection
+- Gold Ball value is not silently assigned $0 and is not credited to Classic-number skill
+
+Exact package ROI is produced only when package_payout_by_rank supplies the total
+terminal/receipt payout for every selected purchase. Otherwise package ROI is NOT_AVAILABLE.
+The Budget learner therefore cannot call Main-line ROI an exact investment ROI.
+RESULT: PASS
+
+8. Jackpot-state integrity
+--------------------------
+- repeated refresh of unchanged economics state does not inflate history
+- 6/49 Gold-Ball count is separate from crowd-pressure proxy
+- crowd pressure still explicitly says it is not measured sales
+RESULT: PASS
+
+9. Production-scale smoke test
+------------------------------
+Fixture: bundled recent seed history; deterministic seed; 12,000 candidates; Top-20.
+
+LOTTO 6/49
+- five strategies: balanced / score_only / focused / pure_coverage / concentrated
+- every strategy: 20/20 unique
+- strategy-suite runtime: ~4.28 s
+- exact 1,048,575-subset frontier runtime: ~3.51 s
+- structural research candidate on this fixture: 5 model-directed lines / $15
+
+LOTTO MAX
+- same five strategies
+- every strategy: 20/20 unique
+- strategy-suite runtime: ~4.47 s
+- exact 1,048,575-subset frontier runtime: ~3.65 s
+- structural research candidate on this fixture: 5 model-directed purchases / $30
+
+Timing is environment-specific and is not a performance guarantee.
+Structural candidates are pre-evidence research fallbacks, not claims of profitable play.
+
+10. Static hygiene
+------------------
+pyflakes is not installed in the validation environment.
+A lightweight AST unused-import scan over app.py and lottery_ai/*.py found no obvious
+unused imports. This is not claimed as a substitute for a full linter.
+
+11. Remaining research limitations
+----------------------------------
+No code change can establish a lottery-prediction edge from historical patterns alone.
+All number features remain heuristics until forward-frozen comparisons beat Random controls
+with adequate samples and multiple-testing correction.
+
+The empirical pair feature is intentionally NOT changed in this hardening release. It measures
+historical association after marginal-frequency normalization; it is not an official fair-draw
+probability multiplier. Any alternative pair null model must first run as a Shadow/A-B model.
+
+Jackpot crowd pressure remains a jackpot-state proxy until verified sales or issued-selection
+counts are available.

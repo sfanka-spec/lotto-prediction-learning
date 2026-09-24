@@ -1,0 +1,208 @@
+{
+  "649": [
+    {
+      "date": "2026-08-15",
+      "numbers": [
+        1,
+        9,
+        17,
+        34,
+        36,
+        43
+      ],
+      "bonus": 24,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-08-19",
+      "numbers": [
+        6,
+        7,
+        10,
+        32,
+        33,
+        36
+      ],
+      "bonus": 11,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-08-22",
+      "numbers": [
+        11,
+        13,
+        21,
+        31,
+        34,
+        45
+      ],
+      "bonus": 5,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-08-26",
+      "numbers": [
+        2,
+        14,
+        30,
+        33,
+        41,
+        45
+      ],
+      "bonus": 39,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-08-29",
+      "numbers": [
+        16,
+        20,
+        23,
+        24,
+        25,
+        33
+      ],
+      "bonus": 21,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-09-02",
+      "numbers": [
+        6,
+        8,
+        9,
+        14,
+        17,
+        25
+      ],
+      "bonus": 16,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-09-05",
+      "numbers": [
+        5,
+        10,
+        17,
+        34,
+        42,
+        49
+      ],
+      "bonus": 44,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-09-09",
+      "numbers": [
+        14,
+        18,
+        27,
+        35,
+        41,
+        47
+      ],
+      "bonus": 17,
+      "verified": true,
+      "source": "WCLC seed"
+    }
+  ],
+  "max": [
+    {
+      "date": "2026-04-14",
+      "numbers": [
+        4,
+        13,
+        20,
+        31,
+        37,
+        43,
+        51
+      ],
+      "bonus": 9,
+      "verified": false,
+      "source": "Published BCLC result seed"
+    },
+    {
+      "date": "2026-07-31",
+      "numbers": [
+        3,
+        28,
+        32,
+        37,
+        40,
+        44,
+        47
+      ],
+      "bonus": 23,
+      "verified": false,
+      "source": "Structured history seed"
+    },
+    {
+      "date": "2026-08-04",
+      "numbers": [
+        1,
+        13,
+        24,
+        34,
+        46,
+        50,
+        51
+      ],
+      "bonus": 36,
+      "verified": false,
+      "source": "Structured history seed"
+    },
+    {
+      "date": "2026-08-18",
+      "numbers": [
+        4,
+        13,
+        21,
+        26,
+        39,
+        43,
+        48
+      ],
+      "bonus": 5,
+      "verified": true,
+      "source": "PlayNow seed"
+    },
+    {
+      "date": "2026-09-08",
+      "numbers": [
+        12,
+        18,
+        19,
+        35,
+        43,
+        49,
+        52
+      ],
+      "bonus": 26,
+      "verified": true,
+      "source": "WCLC seed"
+    },
+    {
+      "date": "2026-09-11",
+      "numbers": [
+        1,
+        38,
+        41,
+        44,
+        45,
+        49,
+        51
+      ],
+      "bonus": 47,
+      "verified": true,
+      "source": "WCLC seed"
+    }
+  ]
+}

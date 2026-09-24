@@ -1,0 +1,57 @@
+Lottery AI V1.2.3 — Coverage Performance & Diagnostics
+Validation date: 2026-09-12 America/Vancouver
+
+1. Regression suite
+   pytest -q
+   RESULT: 64 passed
+
+2. Python syntax/bytecode compilation
+   python -m compileall -q app.py lottery_ai tests
+   RESULT: PASS
+
+3. Review finding: unused app import
+   V1.2.2: app.py imported COVERAGE_ENGINE_VERSION but did not use it.
+   V1.2.3: import removed.
+   RESULT: FIXED
+
+4. Review finding: unused Production weights in promotion path
+   V1.2.2: normalized pw was computed but unused.
+   V1.2.3: old Production weights are now written to learning_log together with promoted Challenger weights and gate evidence.
+   Dedicated regression test: test_auto_promotion_records_old_and_new_production_weights
+   RESULT: FIXED
+
+5. Provider diagnostics
+   Added targeted source/fallback logging for:
+   - Atlantic Lottery official verifier failures
+   - National-Lottery archive HTTP/parser failures
+   - Lotto.net yearly history failures
+   Expected row-level parse rejects remain quiet to avoid log flooding.
+   RESULT: IMPROVED
+
+6. Coverage local-swap performance refactor
+   Engine provenance: COV1.1
+   V1.2.2 rebuilt full Number/Pair/Triple unions and pairwise overlap summaries for every candidate swap.
+   V1.2.3 computes exact one-row deltas and rebuilds state only after an accepted swap.
+   Dedicated equivalence test: test_incremental_swap_objective_matches_full_rebuild
+   RESULT: PASS (incremental objective equals full rebuild objective)
+
+7. Deterministic performance comparison
+   Fixture: 2,500 legal 6/49 candidates, Top 20, Balanced mode, same deterministic seed/input.
+   V1.2.2 timings: 1.724843 s, 1.767378 s, 1.954378 s
+   V1.2.3 timings: 0.779629 s, 0.777198 s, 0.784260 s
+   Median: 1.767378 s -> 0.779629 s
+   Speedup: ~2.27x; median time reduction ~55.9%
+   Final portfolio SHA-256 (normalized combinations + scores):
+   66c0ecfda24acfcf491a88625491ff0a14022a880a52f9ca269bac254323b106
+   Hash was identical in V1.2.2 and V1.2.3.
+   NOTE: timing is environment-specific and is not a guarantee for every PC.
+
+8. 12,000-candidate smoke test
+   6/49: 20/20 unique, Coverage Efficiency 100.0, max overlap 1, COV1.1, ~0.738 s
+   Lotto Max: 20/20 unique, Coverage Efficiency 99.33, max overlap 2, COV1.1, ~0.852 s
+   RESULT: PASS
+
+9. Static-analysis limitation
+   pyflakes was not installed in the build container, and outbound package installation was unavailable.
+   Therefore this validation does NOT claim a fresh whole-project pyflakes pass.
+   The two exact pyflakes findings supplied in the review were independently verified and fixed.

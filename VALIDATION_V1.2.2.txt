@@ -1,0 +1,53 @@
+Lottery AI V1.2.2 — Validation Record
+=============================================
+
+Validation date: 2026-09-12 America/Vancouver
+Base: Lottery AI V1.2.1 — Model Quality Integrity
+Coverage engine: COV1.0
+
+Static checks
+-------------
+- Python compile: PASS
+- app import: PASS
+- database schema migration required: NO
+- old frozen predictions rewritten: NO
+
+Automated tests
+---------------
+pytest -q
+62 passed
+
+Coverage-specific regression checks include:
+- Combination Score remains immutable through portfolio selection
+- output tickets are unique
+- highest Main-score seed remains anchored
+- redundant Top-Score fixture gets higher Pair/Triple coverage under Balanced mode
+- Pair/Triple denominators and reuse counts are explicit
+- Lotto Max lines-per-play metadata = 4
+- overlap matrix counts shared numbers correctly
+- frozen factor_context records COV1.0 + balanced provenance
+- existing Bonus/data-integrity/current-draw/model-quality tests still pass
+
+Production-scale smoke test
+---------------------------
+Candidate pool: 12,000
+Portfolio size: 20 lines
+
+LOTTO 6/49
+- runtime observed in validation container: ~3.2 s
+- unique output lines: 20/20
+- Coverage Efficiency: 97.42
+- unique Pair slots: 284
+- unique Triple slots: 400
+- maximum shared-number overlap: 2
+
+LOTTO MAX
+- runtime observed in validation container: ~3.8 s
+- unique output lines: 20/20
+- Coverage Efficiency: 97.50
+- unique Pair slots: 390
+- unique Triple slots: 700
+- maximum shared-number overlap: 2
+
+Performance values are machine-dependent and are not promises of runtime on another PC.
+Coverage Efficiency measures non-redundant portfolio structure; it is not a win probability.

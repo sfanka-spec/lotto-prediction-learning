@@ -1,0 +1,88 @@
+Lottery AI V1.5.3 — Validation Record
+================================================
+Validation focus: marginal budget / frontier hardening
+App version: V1.5.3
+Portfolio policy: BUD1.3
+Frontier schema: PORTFOLIO_FRONTIER1.2
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 115 passed
+
+2. Python syntax / bytecode
+---------------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+3. Import / database smoke
+--------------------------
+app import: PASS
+temporary SQLite Database initialization: PASS
+
+4. Static code hygiene
+----------------------
+AST-based imported-name usage scan across app.py + lottery_ai/*.py
+Possible unused imports: 0
+Note: pyflakes/ruff are not installed in the validation container, so this is not represented as a full external-linter pass.
+
+5. V1.5.2 one-line bias regression
+----------------------------------
+Corrected conditions:
+- k=1 diversity is NOT_APPLICABLE and contributes 0, rather than receiving a perfect 1.0.
+- Rank Retention is GUARDRAIL_NOT_BONUS.
+- fixed-k subset selection and cross-k deployment sizing use separate objectives.
+- cross-k structural choice uses a monotone diminishing-return knee.
+
+Dedicated regression tests cover:
+- single-line diversity semantics
+- rank-retention guardrail semantics
+- explicit marginal value per dollar
+- diversified 6/49 portfolio does not collapse to one line
+- sweet spot vs maximum deployment separation
+- exact-k cost mapping
+- sweet spot remains stable once the global knee is affordable
+
+6. Randomized invariants
+------------------------
+Random 10-line legal portfolios for both games checked across multiple seeds:
+- selected ranks unique and equal requested k
+- exact cost = k * legal play cost
+- deployment utility envelope non-decreasing
+- sweet-spot cost never exceeds budget
+- max-deployment cost never exceeds budget
+- sweet-spot line count never exceeds max-deployment line count
+RESULT: PASS
+
+7. 20-line exact search smoke
+-----------------------------
+Deterministic random frozen Top-20 fixture, validation machine:
+
+LOTTO 6/49
+- exact non-empty subset search: 1,048,575 subsets
+- observed frontier runtime: ~3.31 s
+- global structural knee: 6 model-directed plays / $18 on this fixture
+- $20 cap: sweet 6 / $18; max deployment 6 / $18
+- $50 cap: sweet 6 / $18; max deployment 16 / $48
+- $100 cap: sweet 6 / $18; max deployment 20 / $60
+
+LOTTO MAX
+- exact non-empty subset search: 1,048,575 subsets
+- observed frontier runtime: ~3.34 s
+- global structural knee: 4 model-directed purchases / $24 on this fixture
+- $20 cap: local sweet 2 / $12; max deployment 3 / $18
+- $50 cap: sweet 4 / $24; max deployment 8 / $48
+- $100 cap: sweet 4 / $24; max deployment 16 / $96
+
+Timing is hardware-dependent and is not a runtime guarantee.
+Fixture sweet spots are structural test outputs, not betting recommendations and not evidence of positive expected ROI.
+
+8. Statistical / leakage boundary
+---------------------------------
+- No historical frozen prediction is regenerated.
+- No post-draw result enters the pre-draw structural frontier.
+- Forward sample size remains draw count, not subset count.
+- Structural sweet spot is explicitly NOT ROI-VALIDATED during data collection.
+- No Martingale / loss-chasing logic added.
+
+FINAL RESULT: PASS

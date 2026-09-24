@@ -1,0 +1,133 @@
+Lottery AI V1.4.1 — Validation Hardening Record
+======================================================
+
+Validation date: 2026-09-13 America/Vancouver session
+Base: Lottery AI V1.4.0 — Model Validation Lab
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 77 passed
+
+2. Python compilation
+---------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+3. Application import / version
+-------------------------------
+import app
+APP_VERSION: V1.4.1
+RESULT: PASS
+
+4. Review-confirmed dead code
+-----------------------------
+- evaluation.py unused `pstdev` import: REMOVED
+- evaluation.py unused local `score`: REMOVED
+RESULT: PASS
+
+Note: pyflakes is not installed in the validation container, so this record does not
+claim a fresh whole-project pyflakes run.
+
+5. Bootstrap implementation hardening
+-------------------------------------
+- deterministic percentile bootstrap retained
+- interval endpoints now use linear interpolation (Type-7 style quantile position)
+- alpha validation added
+- method provenance returned as `percentile_interpolated`
+RESULT: PASS
+
+6. Paired sign-flip implementation hardening
+--------------------------------------------
+- <=16 non-zero paired differences: exact exhaustive sign enumeration
+- >16 non-zero paired differences: deterministic Monte Carlo sign flips
+- Monte Carlo path retains +1 correction to avoid p=0
+- method + permutation count returned in result
+Known fixture: [1,1,1] -> exact p=0.25 over 8 sign assignments
+RESULT: PASS
+
+7. Known-distribution statistical simulation self-check
+-------------------------------------------------------
+Deterministic configuration:
+- simulations: 60
+- sample n: 20
+- bootstrap reps: 800
+- alpha: 0.05
+
+Observed:
+- bootstrap nominal coverage: 0.95
+- bootstrap observed coverage: 0.95
+- sign-flip nominal Type-I rate: 0.05
+- sign-flip observed Type-I rate: 0.0333
+RESULT: PASS
+
+This is a sanity calibration, not proof of exact finite-sample operating characteristics
+for every distribution or sample size.
+
+8. Integrity1.1 layered verification
+------------------------------------
+New V1.4.1 freezes independently re-hash:
+- Prediction payload
+- Feature snapshot (predictions + saved weights/game/target/cutoff)
+- Algorithm descriptor (app/model/coverage descriptor)
+
+Candidate-pool digest remains provenance-only unless an independent source pool snapshot
+exists; the verifier reports NOT_VERIFIABLE rather than overclaiming PASS.
+
+Regression checks:
+- prediction mutation -> MUTATION_DETECTED
+- saved feature verification-input mutation -> MUTATION_DETECTED
+- saved algorithm descriptor mutation -> MUTATION_DETECTED
+- V1.4.0 legacy feature/algorithm hashes without verification inputs -> NOT_VERIFIABLE
+RESULT: PASS
+
+9. Strategy-suite independence
+------------------------------
+Regression verifies:
+- one candidate-pool hash is shared by all modes
+- output is invariant when strategy execution order is reversed
+- Balanced / Score-only / Focused / Pure Coverage outputs match exactly by mode under
+  identical seed/input regardless of loop order
+RESULT: PASS
+
+10. Production-scale same-pool strategy smoke test
+--------------------------------------------------
+Candidate pool: 12,000
+Portfolio size: 20 lines per strategy
+
+LOTTO 6/49
+- balanced: 20 unique lines
+- score_only: 20 unique lines
+- focused: 20 unique lines
+- pure_coverage: 20 unique lines
+- observed total suite runtime: ~2.955 s
+
+LOTTO MAX
+- balanced: 20 unique lines
+- score_only: 20 unique lines
+- focused: 20 unique lines
+- pure_coverage: 20 unique lines
+- observed total suite runtime: ~4.733 s
+
+Timing is environment-specific and is not a promise for another PC.
+
+11. UI clarity
+--------------
+- Champion Score Percentile explicitly states: higher = stronger pre-draw Combination Score rank
+- Integrity display shows Prediction / Features / Algorithm / Candidate Pool separately
+RESULT: PASS
+
+12. Production semantics
+------------------------
+UNCHANGED:
+- Production Main scoring weights
+- Balanced Coverage policy
+- Bonus isolation
+- one official frozen portfolio per draw
+- Shadow-only research policy
+- no post-draw retro-generation counted as pre-draw evidence
+
+13. Interpretation boundary
+---------------------------
+V1.4.1 improves auditability, statistical implementation quality, and validation semantics.
+It does not establish that a fair lottery draw has a reliable exploitable predictive pattern.

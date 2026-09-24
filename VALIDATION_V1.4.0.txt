@@ -1,0 +1,92 @@
+Lottery AI V1.4.0 — Validation Record
+============================================
+
+Validation date: 2026-09-12/13 America/Vancouver session
+Base: Lottery AI V1.2.4 — Champion Match Learning
+
+1. Regression suite
+-------------------
+pytest -q
+RESULT: 72 passed
+
+2. Python compilation
+---------------------
+python -m compileall -q app.py lottery_ai tests
+RESULT: PASS
+
+3. Application import
+---------------------
+import app
+APP_VERSION: V1.4.0
+RESULT: PASS
+
+4. Ranking Calibration
+----------------------
+Regression covers the visible 2026-09-12 pattern where the Champion can be original rank #12.
+Checks:
+- best match calculated from frozen ticket contents
+- Champion original rank retained
+- UNDER_RANKED diagnosis emitted for lower-half Champion
+- matched-number list remains exact
+RESULT: PASS
+
+5. Same-candidate strategy suite
+--------------------------------
+One scored candidate pool feeds:
+- balanced
+- score_only
+- focused
+- pure_coverage
+A SHA-256 candidate-pool hash is returned for freeze provenance.
+RESULT: PASS
+
+6. Coverage-vs-concentration comparison
+---------------------------------------
+Regression verifies:
+Balanced Coverage Gain = Balanced coverage - Score-only coverage
+Concentration Cost = Score-only best match - Balanced best match
+No post-draw reconstruction is counted as frozen evidence.
+RESULT: PASS
+
+7. Statistical validation
+-------------------------
+- deterministic bootstrap mean CI
+- paired sign-flip permutation test
+- paired standardized effect
+- Benjamini-Hochberg FDR correction
+- rolling 30/50/100-draw summaries
+RESULT: PASS
+
+8. Freeze integrity
+-------------------
+A V1.4 frozen prediction with matching SHA-256 returns PASS.
+Mutating the frozen number payload returns MUTATION_DETECTED.
+Legacy freezes without hashes return LEGACY_NO_HASH rather than being rewritten.
+RESULT: PASS
+
+9. Production-scale strategy smoke test
+---------------------------------------
+Candidate pool: 12,000
+Portfolio size: 20 lines per strategy
+
+LOTTO 6/49
+- balanced: 20 lines
+- score_only: 20 lines
+- focused: 20 lines
+- pure_coverage: 20 lines
+- observed total suite runtime: ~4.084 s
+
+LOTTO MAX
+- balanced: 20 lines
+- score_only: 20 lines
+- focused: 20 lines
+- pure_coverage: 20 lines
+- observed total suite runtime: ~3.000 s
+
+Timing is machine-dependent and is not a promise for another PC.
+
+10. Interpretation boundary
+---------------------------
+V1.4 improves auditability, portfolio-strategy comparison, calibration diagnostics,
+and overfitting controls. It does not establish that a fair lottery draw has a
+reliable exploitable predictive pattern.

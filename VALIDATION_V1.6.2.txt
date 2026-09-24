@@ -1,0 +1,18 @@
+Lottery AI V1.6.2 validation
+Date: 2026-09-18
+
+Scope: Current Draw clarity, evidence wording, and data-status label hardening.
+
+Automated test suite:
+146 passed
+
+Verified changes:
+- Tied best-hit ranks are not presented as if all tied tickets share identical numbers.
+- Portfolio winning-number coverage wording is explicit.
+- Champion placement is separated from overall score-vs-hit Spearman correlation.
+- Near-zero Spearman receives a descriptive NEUTRAL label only; no significance claim is made.
+- Bayesian leader displays LOW SAMPLE warning when effective n < 30.
+- Future target with no production freeze displays NOT CREATED YET rather than raw NO_FREEZE.
+- Raw integrity wording changed to Raw audit pass ratio with an explicit definition.
+- Quarantine/model-selection rules unchanged from V1.6.1.
+- Production/Challenger weights and prediction algorithms unchanged.

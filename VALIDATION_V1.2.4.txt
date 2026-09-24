@@ -1,0 +1,32 @@
+Lottery AI V1.2.4 — Champion Match Learning
+
+Validation date: 2026-09-12
+
+1. Full Python compilation
+   PASS: app.py and lottery_ai/*.py
+
+2. Test suite
+   PASS: 67 tests
+
+3. Champion Match regression
+   PASS: fixture matching visible 2026-09-12 aggregate pattern:
+   Top #1=0/6, #2=2/6, #3=1/6, Best=3/6, Top-20 Coverage=5/6.
+   Derived Selection miss=1, Combination gap=2.
+
+4. Leaderboard ordering
+   PASS: Main Match descending -> confirmed Bonus hit -> frozen Combination Score.
+
+5. Champion Pool
+   PASS: all max-match ties are retained; matched numbers and pre-draw components are preserved.
+
+6. Legacy/current backfill
+   PASS: a freeze already judged before V1.2.4 receives one champion_learning record.
+   PASS: repeated backfill is idempotent and does not create duplicate samples.
+
+7. Production isolation
+   PASS by design/test inspection: Champion learning writes only champion_shadow CS1.x weights.
+   Production influence field is 0.0 and Production weights are not rewritten by Champion backfill.
+
+8. Persistent database compatibility
+   champion_learning is created with CREATE TABLE IF NOT EXISTS.
+   Existing freezes/judgments remain unchanged.

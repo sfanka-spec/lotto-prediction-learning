@@ -1,0 +1,43 @@
+Lottery AI V1.6.0 validation
+==================================
+
+Scope
+-----
+- Add a sample-efficient hierarchical Bayesian strategy research layer.
+- Fuse discounted historical walk-forward evidence with full-weight forward freezes.
+- Compare five strategies at 3/5/8/10/20 lines against same-budget Random Control.
+- Preserve Production, frozen predictions, menus, and database compatibility.
+
+Automated verification
+----------------------
+- Full test suite: 138 passed
+- Python compilation: passed for app.py and lottery_ai/*.py
+- Added seven focused V1.6.0 tests covering:
+  * version and Bayesian schema
+  * positive forward evidence screening gate
+  * discounted historical-only evidence
+  * explicit history/forward conflict blocking
+  * duplicate same-draw protection against sample inflation
+  * same-draw forward pairing against Random Control
+  * leakage-safe multi-strategy/multi-line historical replay
+
+Evidence integrity
+------------------
+- Historical observation weight: 0.45
+- Forward frozen observation weight: 1.0
+- Null-anchored shared prior prevents sparse positive streaks from dominating.
+- Variance floor prevents all-tie small samples from creating false certainty.
+- Forward screening requires at least 30 forward draws, P(edge>0) >= 97.5%,
+  a positive 95% credible-interval lower bound, and no source conflict.
+- Forward confirmation requires at least 100 forward draws and P(edge>0) >= 99.5%.
+- Historical-only evidence cannot reach screening or confirmation.
+- Production impact: 0.0%
+- Automatic promotion: disabled
+- Automatic spending authority: none
+
+Compatibility
+-------------
+- No new dependency.
+- No database schema migration.
+- Existing V1.5.5.1 next-draw/jackpot panel retained.
+- Existing Main/Bonus freeze and integrity behavior retained.
