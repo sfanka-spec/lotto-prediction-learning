@@ -1,4 +1,4 @@
-# Lottery AI V1.6.5
+# Lottery AI V1.6.6
 
 面向 **LOTTO 6/49** 与 **LOTTO MAX** 的统计分析与预测学习软件。
 
@@ -8,24 +8,22 @@
 
 ## 当前版本
 
-**V1.6.5 — Statistical Correctness & Runtime Hardening**
+**V1.6.6 — Public Release Hardening**
 
 本版本重点包括：
 
-- 修正不放回抽样下的 pair-co-occurrence 统计偏差；
-- 改进统计诊断与大自由度 t-critical 处理；
-- 加强候选组合生成与运行时保护；
-- 增强历史 CSV 导入与数据完整性检查；
-- 强化模型快照写入与失败回滚；
-- 改进网络重试机制；
-- 加强 UI 异常恢复；
-- 明确使用 Pacific 时区；
-- 扩充回归测试。
+- 增加面向公开共享的安全与文档加固；
+- 明确源码与本地运行数据库之间的边界；
+- 增加 GitHub Actions 自动测试；
+- 增加公开数据、隐私与可复现性说明；
+- 增加公开发布检查清单；
+- 完整保留 V1.6.5 的统计正确性与运行稳定性修复。
 
 详细版本说明请查看：
 
+- `CHANGELOG_V1.6.6.md`
+- `UPGRADE_V1.6.6.md`
 - `CHANGELOG_V1.6.5.md`
-- `UPGRADE_V1.6.5.md`
 - `VALIDATION_V1.6.5.txt`
 
 旧版本说明仍保留在其他 `CHANGELOG_*.md` 和 `UPGRADE_*.md` 文件中。
@@ -183,6 +181,7 @@ lotto-prediction-learning/
 ├─ requirements-dev.txt
 ├─ README.md
 ├─ README_CN.md
+├─ PUBLIC_RELEASE_CHECKLIST.md
 ├─ CHANGELOG_*.md
 └─ UPGRADE_*.md
 ```
@@ -198,6 +197,14 @@ lotto-prediction-learning/
 - `lottery_ai/learning.py` — Freeze / Judge / Learning 流程
 - `lottery_ai/backtest.py` — Walk-forward、Shuffle、Null Test
 - `lottery_ai/updater.py` — 数据更新、补全与恢复
+
+# 首次运行与本地数据库
+
+新用户**不需要**开发者自己的 `lottery.db`。
+
+首次运行时，Lottery AI 会在本地自动创建 SQLite 数据库结构。之后可以通过程序内的数据更新/修复功能补全历史数据，也可以导入经过确认的 CSV 数据。
+
+GitHub 仓库会刻意排除真实运行数据库、学习状态、日志、模型快照二进制文件、凭据和本地缓存。详细规则请查看 `data/README.md` 和 `PUBLIC_RELEASE_CHECKLIST.md`。
 
 # 数据处理流程
 
@@ -332,7 +339,7 @@ v1.7.0-beta.1
 
 当前没有授予公开软件许可证。
 
-仓库目前为 Private，除非仓库所有者之后主动修改可见性。
+即使仓库改成 Public，也不等于自动允许他人复制、修改或重新发布。若希望真正开放使用，应由仓库所有者明确选择并加入 LICENSE。
 
 # 免责声明
 
