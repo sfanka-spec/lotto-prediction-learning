@@ -22,7 +22,7 @@ def _rows_649(n=20):
 
 
 def test_v154_versions():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
     assert PORTFOLIO_POLICY_VERSION == "BUD1.4"
 
 
