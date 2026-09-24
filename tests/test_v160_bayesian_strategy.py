@@ -28,7 +28,7 @@ def _obs(source, n, edge, variant="balanced@5", start=0):
 
 
 def test_v160_version_and_schema():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
     assert BAYESIAN_STRATEGY_VERSION == "BAYES1.1"
 
 
