@@ -1,4 +1,4 @@
-# Lottery AI V1.6.5
+# Lottery AI V1.6.6
 
 Research-oriented statistical analysis and prediction-learning software for **LOTTO 6/49** and **LOTTO MAX**.
 
@@ -6,24 +6,22 @@ Research-oriented statistical analysis and prediction-learning software for **LO
 
 ## Current release
 
-**V1.6.5 — Statistical Correctness & Runtime Hardening**
+**V1.6.6 — Public Release Hardening**
 
 Highlights include:
 
-- finite-population correction for pair-co-occurrence calculations;
-- improved statistical diagnostics and large-df t-critical handling;
-- stronger candidate-generation and runtime safeguards;
-- historical CSV import fallbacks and integrity checks;
-- model snapshot write/rollback hardening;
-- network retry improvements;
-- UI failure recovery;
-- explicit Pacific-time handling;
-- expanded regression tests.
+- safer public-sharing defaults and documentation;
+- explicit separation between source code and local runtime databases;
+- GitHub Actions CI for automated tests on pushes and pull requests;
+- public data-handling and privacy guidance;
+- a public-release checklist covering secrets, data, licensing, and reproducibility;
+- all V1.6.5 statistical/runtime correctness hardening retained.
 
 For detailed version history, see:
 
+- `CHANGELOG_V1.6.6.md`
+- `UPGRADE_V1.6.6.md`
 - `CHANGELOG_V1.6.5.md`
-- `UPGRADE_V1.6.5.md`
 - `VALIDATION_V1.6.5.txt`
 
 Older release notes are preserved in the other `CHANGELOG_*.md` and `UPGRADE_*.md` files.
@@ -67,7 +65,7 @@ If `python` is not recognized, close and reopen PowerShell after installation.
 
 ### 2. Get the project
 
-You can either clone the private GitHub repository:
+You can clone the GitHub repository:
 
 ```powershell
 git clone https://github.com/sfanka-spec/lotto-prediction-learning.git
@@ -162,6 +160,8 @@ lotto-prediction-learning/
 ├─ requirements.txt
 ├─ requirements-dev.txt
 ├─ README.md
+├─ README_CN.md
+├─ PUBLIC_RELEASE_CHECKLIST.md
 ├─ CHANGELOG_*.md
 └─ UPGRADE_*.md
 ```
@@ -177,6 +177,14 @@ Key modules include:
 - `lottery_ai/learning.py` — freeze/judge/learning workflow
 - `lottery_ai/backtest.py` — walk-forward and research tests
 - `lottery_ai/updater.py` — data refresh and recovery
+
+## First run and local database
+
+A fresh user does **not** need the developer's personal `lottery.db`.
+
+On first use, Lottery AI creates its SQLite schema locally. The user can then populate history through the built-in update/repair workflow or import an approved CSV dataset.
+
+The repository intentionally excludes real runtime databases, learning state, logs, model snapshot binaries, credentials, and local caches. See `data/README.md` and `PUBLIC_RELEASE_CHECKLIST.md`.
 
 ## Data and model behavior
 
@@ -267,7 +275,7 @@ Keep generated caches, local databases, credentials, logs, and environment files
 
 ## License
 
-No public license is currently granted. The repository is private unless the owner changes its visibility.
+No public software license is currently granted. Making the repository public does not by itself grant reuse, modification, or redistribution rights. The repository owner should explicitly choose a license before inviting public reuse.
 
 ## Disclaimer
 

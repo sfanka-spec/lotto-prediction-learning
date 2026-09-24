@@ -13,7 +13,7 @@ def _card(game_key: str, language_mode: str = "en"):
 
 
 def test_v1551_version():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
 
 
 def test_lotto_max_next_draw_panel_includes_date_day_status_and_jackpot():

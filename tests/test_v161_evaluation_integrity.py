@@ -17,7 +17,7 @@ from lottery_ai.portfolio import (
 
 def test_v161_identity_and_small_sample_t_fix():
     assert APP_NAME == "Lottery AI"
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
     diffs = [0.2, 0.8, 0.1, 1.0, -0.1, 0.7, 0.3, 0.9]
     expected = mean(diffs) / (stdev(diffs) / math.sqrt(len(diffs)))
     assert paired_z_score(diffs) == pytest.approx(expected)

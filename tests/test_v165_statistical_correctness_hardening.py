@@ -22,7 +22,7 @@ def _draw(date, numbers, bonus):
 
 
 def test_v165_version():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
 
 
 def test_fastmath_matches_float_statistics_and_supports_generators():

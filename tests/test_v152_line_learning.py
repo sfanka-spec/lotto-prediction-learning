@@ -14,7 +14,7 @@ def _rows():
 
 
 def test_version_bumped_for_line_learning():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
     assert PORTFOLIO_POLICY_VERSION == "BUD1.4"
 
 

@@ -36,7 +36,7 @@ def _current_portfolio_rows():
 
 
 def test_v164_version_and_rank_association_thresholds():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
     assert classify_rank_association(0.012) == "NEUTRAL"
     assert classify_rank_association(0.10) == "WEAK_POSITIVE"
     assert classify_rank_association(-0.10) == "WEAK_NEGATIVE"

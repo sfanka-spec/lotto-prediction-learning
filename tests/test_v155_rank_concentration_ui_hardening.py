@@ -44,7 +44,7 @@ def _profile_with_five_winners_front_loaded():
 
 
 def test_v155_version():
-    assert APP_VERSION == "V1.6.5"
+    assert APP_VERSION == "V1.6.6"
 
 
 def test_user_example_distinguishes_full_portfolio_coverage_from_rank_concentration():
