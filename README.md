@@ -275,7 +275,9 @@ Keep generated caches, local databases, credentials, logs, and environment files
 
 ## License
 
-No public software license is currently granted. Making the repository public does not by itself grant reuse, modification, or redistribution rights. The repository owner should explicitly choose a license before inviting public reuse.
+This project is licensed under the [MIT License](LICENSE).
+
+You may use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the software, subject to the terms of the MIT License.
 
 ## Disclaimer
 
